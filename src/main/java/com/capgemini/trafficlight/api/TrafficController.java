@@ -6,12 +6,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 
-import org.apache.log4j.Logger;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,9 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.trafficlight.Color;
 import com.capgemini.trafficlight.Sensor;
-import com.capgemini.trafficlight.SensorFactory;
 import com.capgemini.trafficlight.exception.FunctionalException;
-import com.capgemini.trafficlight.exception.TechnicalException;
 import com.capgemini.trafficlight.exception.TrafficLightException;
 
 /**
@@ -46,7 +45,9 @@ public class TrafficController {
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(TrafficController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TrafficController.class);
+
+    @Autowired
     Sensor sensor;
 
     @RequestMapping("/")
@@ -55,7 +56,7 @@ public class TrafficController {
         try {
             sensor.displayHelp();
         } catch (TrafficLightException e) {
-            LOGGER.error(e);
+            LOGGER.error("Error in displayHelp", e);
         }
         return "displayHelp invoked";
     }
@@ -69,7 +70,7 @@ public class TrafficController {
             col = checkColor(color);
             sensor.turnOn(col);
         } catch (TrafficLightException e) {
-            LOGGER.error(e);
+            LOGGER.error("Error in turnOn", e);
             throw e;
         }
         TrafficResponse response = new TrafficResponse();
@@ -86,21 +87,12 @@ public class TrafficController {
             col = checkColor(color);
             sensor.turnOn(col);
         } catch (TrafficLightException e) {
-            LOGGER.error(e);
+            LOGGER.error("Error in turnOff", e);
             throw e;
         }
         TrafficResponse response = new TrafficResponse();
         response.setMessage("turnOff Color " + col.getLabel() + " invoked");
         return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    @PostConstruct
-    public void init() {
-        try {
-            sensor = SensorFactory.getInstance().createSensor();
-        } catch (TechnicalException e) {
-            LOGGER.error(e);
-        }
     }
 
     private Color checkColor(String color) throws FunctionalException {

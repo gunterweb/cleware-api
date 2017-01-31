@@ -2,33 +2,35 @@ package com.capgemini.trafficlight.cleware;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.ProcessBuilder.Redirect;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import com.capgemini.trafficlight.Color;
 import com.capgemini.trafficlight.Sensor;
 import com.capgemini.trafficlight.exception.TrafficLightException;
 
+@Component
 public class ClewareSensor implements Sensor {
 
+    @Value("${log.path}")
     private File logFile;
+    @Value("${command.path}")
     private String commandPath;
 
     /**
      * Logger
      */
-    private static final Logger LOGGER = Logger.getLogger(ClewareSensor.class);
-
-    public ClewareSensor(String commandPath, File logFile) {
-        this.setCommandPath(commandPath);
-        this.setLogFile(logFile);
-    }
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClewareSensor.class);
 
     private void executeProcess(String... args) throws TrafficLightException {
         ProcessBuilder pb = new ProcessBuilder(args);
         LOGGER.debug("Execute command : " + StringUtils.join(args, " "));
-        pb.redirectOutput(logFile);
+        pb.redirectOutput(Redirect.appendTo(logFile));
         try {
             pb.start();
         } catch (IOException e) {
@@ -55,16 +57,8 @@ public class ClewareSensor implements Sensor {
         return logFile;
     }
 
-    public void setLogFile(File logFile) {
-        this.logFile = logFile;
-    }
-
     public String getCommandPath() {
         return commandPath;
-    }
-
-    public void setCommandPath(String commandPath) {
-        this.commandPath = commandPath;
     }
 
 }
