@@ -29,7 +29,9 @@ public class ClewareSensor implements Sensor {
 
     private void executeProcess(String... args) throws TrafficLightException {
         ProcessBuilder pb = new ProcessBuilder(args);
-        LOGGER.debug("Execute command : " + StringUtils.join(args, " "));
+        StringBuilder sb = new StringBuilder("Execute command : " );
+        sb.append(StringUtils.join(args, " "));
+        LOGGER.debug(sb.toString());
         pb.redirectOutput(Redirect.appendTo(logFile));
         try {
             pb.start();

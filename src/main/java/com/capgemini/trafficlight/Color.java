@@ -29,11 +29,11 @@ public enum Color {
     }
 
     public static Color getColorFromCode(String code) throws FunctionalException {
-        if (code.equalsIgnoreCase("0")) {
+        if ("0".equalsIgnoreCase(code)) {
             return RED;
-        } else if (code.equalsIgnoreCase("1")) {
+        } else if ("1".equalsIgnoreCase(code)) {
             return YELLOW;
-        } else if (code.equalsIgnoreCase("2")) {
+        } else if ("2".equalsIgnoreCase(code)) {
             return GREEN;
         } else {
             throw new FunctionalException(FunctionalReason.COLOR_NOT_FOUND);
