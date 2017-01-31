@@ -85,7 +85,7 @@ public class TrafficController {
         Color col = null;
         try {
             col = checkColor(color);
-            sensor.turnOn(col);
+            sensor.turnOff(col);
         } catch (TrafficLightException e) {
             LOGGER.error("Error in turnOff", e);
             throw e;

@@ -52,6 +52,7 @@ public class FunctionalException extends TrafficLightException {
      * 
      * @return internationalized message
      */
+    @Override
     public String getInternationalizedMessage() {
         DefaultFunctionalException def = new DefaultFunctionalException();
         String message = def.getInternationalizedMessage();
