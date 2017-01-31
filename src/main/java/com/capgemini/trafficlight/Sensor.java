@@ -9,9 +9,34 @@ import com.capgemini.trafficlight.exception.TrafficLightException;
  *
  */
 public interface Sensor {
-    public void displayHelp() throws TrafficLightException;
+    /**
+     * Display Help for Sensor
+     * 
+     * @return String containing output
+     * @throws TrafficLightException
+     *             TrafficLightException
+     */
+    public String displayHelp() throws TrafficLightException;
 
-    public void turnOn(Color color) throws TrafficLightException;
+    /**
+     * Turns on Sensor for a Color
+     * 
+     * @param color
+     *            color
+     * @return String containing output
+     * @throws TrafficLightException
+     *             TrafficLightException
+     */
+    public String turnOn(Color color) throws TrafficLightException;
 
-    public void turnOff(Color color) throws TrafficLightException;
+    /**
+     * Turns off Sensor for a Color
+     * 
+     * @param color
+     *            color
+     * @return String containing output
+     * @throws TrafficLightException
+     *             TrafficLightException
+     */
+    public String turnOff(Color color) throws TrafficLightException;
 }

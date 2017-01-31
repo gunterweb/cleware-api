@@ -1,5 +1,11 @@
 package com.capgemini.trafficlight.exception;
 
+/**
+ * Main exception class
+ * 
+ * @author fbontemp
+ *
+ */
 public class TrafficLightException extends Exception {
     private final boolean functional;
     /**
@@ -43,7 +49,7 @@ public class TrafficLightException extends Exception {
     private boolean checkFunctionalException(Throwable cause) {
         return cause instanceof FunctionalException;
     }
-    
+
     /**
      * 
      * @return internationalized message

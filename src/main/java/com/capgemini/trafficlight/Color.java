@@ -4,7 +4,7 @@ import com.capgemini.trafficlight.exception.FunctionalException;
 import com.capgemini.trafficlight.exception.FunctionalReason;
 
 /**
- * Enumeration for trffic light colors
+ * Enumeration for traffic light colors
  * 
  * @author fbontemp
  *
@@ -28,6 +28,15 @@ public enum Color {
         return label;
     }
 
+    /**
+     * Gets color elements from code
+     * 
+     * @param code
+     *            code
+     * @return Color
+     * @throws FunctionalException
+     *             FunctionalException
+     */
     public static Color getColorFromCode(String code) throws FunctionalException {
         if ("0".equalsIgnoreCase(code)) {
             return RED;

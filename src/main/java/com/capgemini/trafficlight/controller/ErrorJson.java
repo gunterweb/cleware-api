@@ -1,7 +1,13 @@
-package com.capgemini.trafficlight.api;
+package com.capgemini.trafficlight.controller;
 
 import java.util.Map;
 
+/**
+ * Bean defining Error in JSON format
+ * 
+ * @author fbontemp
+ *
+ */
 public class ErrorJson {
 
     private Integer status;

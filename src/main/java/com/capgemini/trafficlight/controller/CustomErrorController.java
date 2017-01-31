@@ -1,4 +1,4 @@
-package com.capgemini.trafficlight.api;
+package com.capgemini.trafficlight.controller;
 
 import java.util.Map;
 
@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+/**
+ * Custom Error Controller 
+ * @author fbontemp
+ *
+ */
 @RestController
 public class CustomErrorController implements ErrorController {
 

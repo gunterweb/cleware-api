@@ -1,14 +1,20 @@
-package com.capgemini.trafficlight.api;
+package com.capgemini.trafficlight.api.dto;
 
 import java.io.Serializable;
 
+/**
+ * Bean defining global response
+ * 
+ * @author fbontemp
+ *
+ */
 public class TrafficResponse implements Serializable {
     /**
      * 
      */
     private static final long serialVersionUID = 5256769370251369854L;
     private String message;
-    private String errorMessage;
+    private String output;
 
     public TrafficResponse() {
         super();
@@ -22,12 +28,12 @@ public class TrafficResponse implements Serializable {
         this.message = message;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getOutput() {
+        return output;
     }
 
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public void setOutput(String output) {
+        this.output = output;
     }
 
 }
