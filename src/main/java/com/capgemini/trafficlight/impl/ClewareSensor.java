@@ -27,6 +27,7 @@ import com.capgemini.trafficlight.exception.TrafficLightException;
 @Component
 public class ClewareSensor implements Sensor {
 
+    private static final String EXECUTE_COMMAND = "Execute command : ";
     private static final String TURN_ON_COMMAND = "1";
     private static final String TURN_OFF_COMMAND = "0";
     private static final String HELP_COMMAND = "-h";
@@ -52,17 +53,21 @@ public class ClewareSensor implements Sensor {
      */
     private String executeProcess(String... args) throws TrafficLightException {
         ProcessBuilder pb = new ProcessBuilder(args);
-        StringBuilder sb = new StringBuilder("Execute command : ");
+        StringBuilder sb = new StringBuilder(EXECUTE_COMMAND);
         sb.append(StringUtils.join(args, " "));
         LOGGER.debug(sb.toString());
-        String result = null;
+        String result;
+        Process process;
         try {
-            Process process = pb.start();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            process = pb.start();
+        } catch (IOException e) {
+            throw new TrafficLightException(e);
+        }
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
             StringBuilder builder = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
-                builder.append(line);                
+                builder.append(line);
             }
             result = builder.toString();
         } catch (IOException e) {
@@ -73,9 +78,7 @@ public class ClewareSensor implements Sensor {
     }
 
     private void logResult(String result) {
-        try (FileWriter fw = new FileWriter(logFile, true);
-                BufferedWriter bw = new BufferedWriter(fw);
-                PrintWriter out = new PrintWriter(bw)) {
+        try (FileWriter fw = new FileWriter(logFile, true); PrintWriter out = new PrintWriter(new BufferedWriter(fw))) {
             out.println(result);
         } catch (IOException e) {
             LOGGER.error("Error when logging results", e);
